@@ -1,4 +1,4 @@
-CREATE TABLE renee_photo_store (id INTEGER, item TEXT, price INTEGER, stock INTEGER, aisle INTEGER);
+CREATE TABLE renee_photo_store (id INTEGER PRIMARY KEY, item TEXT, price INTEGER, stock INTEGER, aisle INTEGER);
  
 INSERT INTO renee_photo_store VALUES (1, "Baterries", 60, 99,3);
 INSERT INTO renee_photo_store VALUES (2, "iPad", 600, 10,11);
