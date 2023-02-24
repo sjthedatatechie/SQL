@@ -1,0 +1,59 @@
+/* Create table about the people and what they do here 
+
+Celine Dion - Singer
+Adele - Singer
+Taylor Swift - Singer
+Carrie Underwood - Singer
+Halsey - Singer 
+Idina Menzel - Singer
+Ben Rector - Singer
+Hunter Hayes - Singer
+Ariana Granda - Singer
+Lewis Capaldi
+Lukas Graham - Singer
+Mariah Carey - Singer 
+Sia - Singer 
+Thomas Rhett - Singer
+Zendaya - Singer/Actor
+*/
+
+CREATE TABLE famous_people (id INTEGER PRIMARY KEY, name TEXT);
+INSERT INTO famous_people VALUES (1, "Celine Dion");
+INSERT INTO famous_people VALUES (2, "Taylor Swift");
+INSERT INTO famous_people VALUES (3, "Carrie Underwood");
+INSERT INTO famous_people VALUES (4, "Halsey");
+INSERT INTO famous_people VALUES (6, "Idina Menzel");
+INSERT INTO famous_people VALUES (7, "Ben Rector");
+INSERT INTO famous_people VALUES (8, "Ariana Grande");
+INSERT INTO famous_people VALUES (9, "Hunter Hayes");
+INSERT INTO famous_people VALUES (10, "Lewis Capaldi");
+INSERT INTO famous_people VALUES (11, "Lukas Graham");
+INSERT INTO famous_people VALUES (12, "Sia");
+INSERT INTO famous_people VALUES (13, "Thomas Rhett");
+INSERT INTO famous_people VALUES (14, "Zendaya");
+INSERT INTO famous_people VALUES (15, "Mariah Carey");
+
+CREATE TABLE occupation (id INTEGER PRIMARY KEY, occupation TEXT);
+INSERT INTO occupation VALUES (1, "Singer");
+INSERT INTO occupation VALUES (2, "Singer");
+INSERT INTO occupation VALUES (3, "Singer");
+INSERT INTO occupation VALUES (4, "Singer");
+INSERT INTO occupation VALUES (5, "Singer");
+INSERT INTO occupation VALUES (6, "Singer");
+INSERT INTO occupation VALUES (7, "Singer");
+INSERT INTO occupation VALUES (8, "Singer");
+INSERT INTO occupation VALUES (9, "Singer");
+INSERT INTO occupation VALUES (10, "Singer");
+INSERT INTO occupation VALUES (11, "Singer");
+INSERT INTO occupation VALUES (12, "Singer");
+INSERT INTO occupation VALUES (13, "Singer");
+INSERT INTO occupation VALUES (14, "Singer");
+INSERT INTO occupation VALUES (15, "Singer");
+
+SELECT famous_people.name, occupation.occupation
+FROM famous_people
+LEFT outer JOIN occupation
+ON famous_people.id = occupation.id;
+
+
+
