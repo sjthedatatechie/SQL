@@ -35,7 +35,7 @@ SELECT sum(quantity)*price as revenue, product
 FROM BIT_DB.JanSales
 GROUP BY product
 
-/*query to find which products sold in Feb were at a specific address, how many were told and what was the total revenue*/
+/*query to find which products sold in Feb were at a specific address, how many were ordered and what was the total revenue*/
 select 
 sum(Quantity), 
 product, 
@@ -44,7 +44,7 @@ FROM BIT_DB.FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY product
 
-/* query to find how many customers had ordered more than 2 products at a time ant was the average spent for those customers. */ 
+/* query to find how many customers had ordered more than 2 products at a time and what was the average spent for those customers. */ 
 select 
 count(distinct cust.acctnum), 
 avg(quantity*price)
