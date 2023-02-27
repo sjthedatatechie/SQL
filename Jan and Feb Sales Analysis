@@ -1,8 +1,9 @@
-/*Database name is BIT_DB data is in table names include Jan Sales, Feb sales and Customers.
+/*Database name is BIT_DB data is in table names include Jan Sales, Feb sales and Customers 
+Data in orderid field needed to be cleaned up as it contained multiple types of content. orderid longer than 6 characters as well as text as the orderid 
+was eliminated*/
 
 
-/* query to find out how many orders were in January. Orderid field has some data that needs to be clearned up
-including orderid longer than 6 characters as well as text as the orderid */
+/* query to find out how many orders were in January*/
 SELECT COUNT(orderid)
 FROM BIT_DB.JanSales
 WHERE length(orderid) = 6 
