@@ -1,0 +1,68 @@
+-- What was the affect of Obamacare on the uninsured at a National Level?
+--2010 (before)
+
+SELECT AVG(Uninsured_Rate_2010) as National_Uninsured_Rate
+FROM insurance.dbo.states;
+
+SELECT State, AVG(Uninsured_Rate_2010) as State_Uninsured_Rate
+FROM insurance.dbo.states
+GROUP BY State;
+
+--2015 after
+
+SELECT AVG(Uninsured_Rate_2015) as National_Uninsured_Rate
+FROM insurance.dbo.states;
+
+SELECT State, AVG(Uninsured_Rate_2015) as State_Uninsured_Rate
+FROM insurance.dbo.states
+GROUP BY State;
+
+
+--uninsured rate difference by state
+SELECT State, 
+       (AVG(Uninsured_Rate_2015) - AVG(Uninsured_Rate_2010)) AS Uninsured_Rate_Difference
+FROM insurance.dbo.states
+GROUP BY State;
+
+
+--Which state had the highest uninsured rate before Obamacare?
+
+SELECT Top 1 State, AVG(Uninsured_Rate_2010) as State_Uninsured_Rate
+FROM insurance.dbo.states
+GROUP BY State
+ORDER BY State_Uninsured_Rate desc
+
+--What state had the lowest?
+SELECT Top 1 State, AVG(Uninsured_Rate_2010) as State_Uninsured_Rate
+FROM insurance.dbo.states
+GROUP BY State
+ORDER BY State_Uninsured_Rate;
+
+--After Obamacare what top 5 states had the best improvement in Uninsured Rates?
+SELECT Top 5 State, 
+       (AVG(Uninsured_Rate_2015) - AVG(Uninsured_Rate_2010)) AS Uninsured_Rate_Difference
+FROM insurance.dbo.states
+GROUP BY State
+Order by Uninsured_Rate_Difference;
+
+--Which state had the most medicaid enrollment in 2016?
+SELECT Top 1 state 
+FROm insurance.dbo.states 
+Order by Medicaid_enrollment_2016;
+
+--What is the avg tax credit given to individuals?
+SELECT AVG(Average_monthly_tax_credit_2016) as Average_Tax_Credit
+FROM insurance.dbo.states;
+
+--How many states increased their state medicaid program in 2016? tried to use = ; but the column type wouldn't work
+--internet help to find out needed to use the word like.
+SELECT State
+FROM insurance.dbo.states
+WHERE State_Medicaid_Expansion_2016 LIKE 'True';
+
+
+
+--Increase in Medicaid enrollment
+SELECT SUM(Medicaid_enrollment_change_2013_2016) as Medicaid_Increase
+FROM Insurance.dbo.states;
+
