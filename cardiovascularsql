@@ -1,0 +1,115 @@
+Queries off of cardio dataset
+
+--Want to find out how many people are in each category of health
+SELECT General_Health, COUNT(*) as NoOfIndv
+FROM cardio.dbo.cvd
+Group by General_Health;
+
+--What is the average BMI of individuals?
+SELECT General_Health, AVG(BMI) as BMI
+FROM cardio.dbo.cvd
+GROUP BY General_Health;
+
+--What are the diagnoses per gender?
+SELECT 
+  Sex,
+  COUNT(Heart_disease) as Heart_Disease, 
+  COUNT(Depression) as Depression, 
+  COUNT(Diabetes) as Diabetes,
+  COUNT(Arthritis) as Arthritis,
+  COUNT(Skin_Cancer) as Skin_Cancer,
+  COUNT(Other_Cancer) as Other_Cancer
+FROM Cardio.dbo.cvd
+WHERE Heart_Disease = 'Yes' OR Depression = 'Yes' OR Diabetes = 'Yes'
+   OR Arthritis = 'Yes' OR Skin_Cancer = 'Yes' OR Other_Cancer = 'Yes'
+GROUP BY SEX;
+
+
+--What is the average age per category?
+SELECT General_Health, AVG(Height_cm) as Height, AVG(Weight_kg) as Weight
+FROM Cardio.dbo.cvd
+Group by General_Health;
+
+--What is the average BMI by age category?
+SELECT Age_Category, AVG(BMI) as BMI
+FROM Cardio.dbo.cvd
+Group By Age_Category;
+
+
+--IS there any correlation between depression and diagonosed diseases?
+SELECT COUNT(*) as PeoplewithDepression
+FROM Cardio.dbo.cvd
+Where (Heart_Disease='Yes' OR Skin_Cancer = 'Yes' OR Other_Cancer = 'YES' 
+OR Diabetes = 'Yes' or Arthritis = 'Yes')
+AND Depression = 'Yes';
+--returns 35133
+
+SELECT COUNT(*) as PeoplewithDepression
+FROM Cardio.dbo.cvd
+Where (Heart_Disease='Yes' OR Skin_Cancer = 'Yes' OR Other_Cancer = 'YES' 
+OR Diabetes = 'Yes'  OR Arthritis = 'Yes')
+AND Depression = 'No';
+--returns 113430; appears no correlation
+
+-- depression by general_health
+SELECT General_Health, COUNT(*) as PeoplewithDepression
+FROM Cardio.dbo.cvd
+Where (Heart_Disease='Yes' OR Skin_Cancer = 'Yes' OR Other_Cancer = 'YES' 
+OR Diabetes = 'Yes' OR  Arthritis = 'Yes')
+Group by General_Health;
+
+-- depression by age
+SELECT Age_Category, COUNT(*) as PeoplewithDepression
+FROM Cardio.dbo.cvd
+Where (Heart_Disease='Yes' OR Skin_Cancer = 'Yes' OR Other_Cancer = 'YES' 
+OR Diabetes = 'Yes')
+Group by Age_Category;
+
+--which age group is the most depressed
+SELECT TOP 1 Age_Category, COUNT(*) as PeoplewithDepression
+FROM Cardio.dbo.cvd
+Where (Heart_Disease='Yes' OR Skin_Cancer = 'Yes' OR Other_Cancer = 'YES' 
+OR Diabetes = 'Yes')
+Group by Age_Category
+Order by PeoplewithDepression DESC;
+
+--What age group is most up to date on checkups?
+SELECT 
+  Age_Category,
+  SUM(checkup = 'within the past 2 years') AS Within_the_past_2_years,
+  SUM(checkup = 'within the past 5 years') AS Within_the_past_5_years,
+  SUM(checkup = '5 or more years ago') AS More_than_5_years,
+  SUM(checkup = 'never') AS Never,
+  SUM(checkup = 'within the past year') AS Within_the_past_year
+FROM cardio.dbo.cvd
+GROUP BY Age_Category;
+
+--this query would not work, had to use online resources. 
+SELECT
+  Age_Category,
+  SUM(CASE WHEN checkup = 'within the past 2 years' THEN 1 ELSE 0 END) AS Within_the_past_2_years,
+  SUM(CASE WHEN checkup = 'within the past 5 years' THEN 1 ELSE 0 END) AS Within_the_past_5_years,
+  SUM(CASE WHEN checkup = '5 or more years ago' THEN 1 ELSE 0 END) AS More_than_5_years,
+  SUM(CASE WHEN checkup = 'never' THEN 1 ELSE 0 END) AS Never,
+  SUM(CASE WHEN checkup = 'within the past year' THEN 1 ELSE 0 END) AS Within_the_past_year
+FROM (
+  SELECT Age_Category, checkup
+  FROM cardio.dbo.cvd
+) AS subquery
+GROUP BY Age_Category
+ORDER BY Age_Category;
+
+--outside resource put it in a case statement, where if the text is true it is 1 is 
+--returned; and false 0 is returned, then adds it up, since 0+0 is 0 the 1s add up to
+--return the result queried.
+
+
+
+
+
+
+
+
+
+
+
