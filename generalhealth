@@ -1,4 +1,4 @@
-Queries off of cardio dataset
+
 
 --Want to find out how many people are in each category of health
 SELECT General_Health, COUNT(*) as NoOfIndv
@@ -103,13 +103,46 @@ ORDER BY Age_Category;
 --returned; and false 0 is returned, then adds it up, since 0+0 is 0 the 1s add up to
 --return the result queried.
 
+SELECT COUNT(*) as Smokers
+FROM Cardio.dbo.cvd
+WHERE Smoking_History = 'Yes';
+
+
+SELECT COUNT(*) as Smokers
+FROM Cardio.dbo.cvd
+WHERE Smoking_History = 'Yes';
 
 
 
+SELECT
+    (COUNT(*) * 100.0 / (SELECT COUNT(*) 
+	FROM Cardio.dbo.cvd)) AS PercentageOfSmokers
+FROM
+    Cardio.dbo.cvd
+WHERE
+    Smoking_History = 'Yes';
 
 
+SELECT
+    (COUNT(*) * 100.0 / (SELECT COUNT(*) 
+	FROM Cardio.dbo.cvd)) AS PercentageofDrinkers
+FROM
+    Cardio.dbo.cvd
+WHERE
+    Alcohol_Consumption >0;
 
-
-
-
-
+--Pulled the data into powerbi and decided that I wanted all the data to be by age category.
+--Redoing this query based on age.
+SELECT 
+  Age_Category,
+  COUNT(Heart_disease) as Heart_Disease, 
+  COUNT(Depression) as Depression, 
+  COUNT(Diabetes) as Diabetes,
+  COUNT(Arthritis) as Arthritis,
+  COUNT(Skin_Cancer) as Skin_Cancer,
+  COUNT(Other_Cancer) as Other_Cancer
+FROM Cardio.dbo.cvd
+WHERE Heart_Disease = 'Yes' OR Depression = 'Yes' OR Diabetes = 'Yes'
+   OR Arthritis = 'Yes' OR Skin_Cancer = 'Yes' OR Other_Cancer = 'Yes'
+GROUP BY Age_Category
+Order by Age_Category;
